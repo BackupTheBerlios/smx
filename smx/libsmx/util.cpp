@@ -235,7 +235,7 @@ void smx_log_pf(int level, int err_id, const char *s1, const char *s2, const cha
 const char *smx_log_file(const char *path)
 {
 	const char *ret = gDebugLogFile;
-	if (path) gDebugLogFile = path;
+	if (path && *path) gDebugLogFile = path;
 	return ret;
 }
 
@@ -419,3 +419,4 @@ int setenv(const char *name, const char *value, int overwrite)
 	return r;
 }
 #endif
+
