@@ -51,7 +51,9 @@ qObjTimed *qObjCache::MapObj(qObj *obj, const char *name, qStr *fp, int size)
 
 	myCtx->MapObj(t, name);
 
-	t->SetTime(fp->GetLastModified());
+	if (fp) {
+		t->SetTime(fp->GetLastModified());
+	}
 
 	return t;
 }
@@ -218,7 +220,9 @@ void qObjCache::EvalModule(qCtx *ctx, qStr *out, qArgAry *args)
 	qObjTimed *found = 0;
 	qStrRef fin;
 
-	if (! (fin = OpenFile(ctx, &found, path)) ) {
+	bool is_ext = (!stricmp(path.GetBuffer() + path.Length() - strlen(SHARED_LIB_EXT), SHARED_LIB_EXT));
+
+	if (! (fin = OpenFile(ctx, &found, path)) && !is_ext) {
 		ctx->Throw(out, 552, "Module file could not be found/opened.");
 		return;
 	}
@@ -229,7 +233,7 @@ void qObjCache::EvalModule(qCtx *ctx, qStr *out, qArgAry *args)
 	}
 
 	if (!module) {
-		if (!stricmp(path.GetBuffer() + path.Length() - strlen(SHARED_LIB_EXT), SHARED_LIB_EXT)) {
+		if (is_ext) {
 			PSMXEXTLIB smx;
 
 	#ifdef WIN32
