@@ -71,6 +71,11 @@ class CDBHash {
 public:
 	CDBHash() {
 		m_db = NULL;
+#ifdef HAVE_SQLITE3_H
+		m_st_get = NULL;
+		m_st_set = NULL;
+		m_st_del = NULL;
+#endif
 		*m_path = '\0';
 		m_oktxn = false;
 		m_triedthispath = 0;

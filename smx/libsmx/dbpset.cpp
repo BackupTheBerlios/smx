@@ -155,6 +155,12 @@ bool CDBHash::Open()
 		return false;
 	}
 
+#ifdef sqlite3_prepare_v2
+	#define SQLITE3_PREP sqlite3_prepare_v2
+#else
+	#define SQLITE3_PREP sqlite3_prepare
+#endif
+	
 #ifdef DBH_SQLITE3
 	sqlite3 *t = NULL;
         int err = sqlite3_open(m_path, &t);
@@ -167,13 +173,13 @@ bool CDBHash::Open()
 		if (sqlite3_exec(t, "create table if not exists h (k text primary key, v text)", NULL, NULL, &msg))  {
                 	smx_log_pf(SMXLOGLEVEL_WARNING, err, "SQLITE3 create table failed", m_path, msg);
 		} else {
-			if (sqlite3_prepare_v2(t, "select v from h where k=?", -1, &m_st_get, &p)) {
+			if (SQLITE3_PREP(t, "select v from h where k=?", -1, &m_st_get, &p)) {
                 		smx_log_pf(SMXLOGLEVEL_WARNING, err, "SQLITE3 prepare stmt get failed", m_path, sqlite3_errmsg(t));
 			}
-                        if (sqlite3_prepare_v2(t, "delete from h where k=?", -1, &m_st_del, &p)) {
+                        if (SQLITE3_PREP(t, "delete from h where k=?", -1, &m_st_del, &p)) {
                                 smx_log_pf(SMXLOGLEVEL_WARNING, err, "SQLITE3 prepare stmt del failed", m_path, sqlite3_errmsg(t));
                         }
-			if (sqlite3_prepare_v2(t, "insert or replace into h (k, v) values (?, ?)", -1, &m_st_set, &p)) {
+			if (SQLITE3_PREP(t, "insert or replace into h (k, v) values (?, ?)", -1, &m_st_set, &p)) {
                 		smx_log_pf(SMXLOGLEVEL_WARNING, err, "SQLITE3 prepare stmt set failed", m_path, sqlite3_errmsg(t));
 			}
 		}
