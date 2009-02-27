@@ -60,6 +60,7 @@ rm -rf %{buildroot}
 %doc AUTHORS ChangeLog COPYING INSTALL README TODO
 %{_bindir}/smx
 %{_libdir}/lib*smx.*
+%{_libdir}/lib*ext.*
 %{_prefix}/share/man/man3/%*
 
 %files devel
