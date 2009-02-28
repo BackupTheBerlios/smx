@@ -27,9 +27,6 @@
 /* Define to 1 if you have the `bzero' function. */
 #undef HAVE_BZERO
 
-/* Define to 1 if you have the <db.h> header file. */
-#undef HAVE_DB_H
-
 /* Define to 1 if you have the declaration of `strerror_r', and to 0 if you
    don't. */
 #undef HAVE_DECL_STRERROR_R

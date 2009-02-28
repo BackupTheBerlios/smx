@@ -18,7 +18,7 @@ THIS SOFTWARE IS PROVIDED 'AS IS' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDI
 
 /////// %hset/%hget object, uses a threadsafe (TS) context
 
-#include "dbpset.h"
+#include "dbh.h"
 
 class qObjHCtx : public qObjTS
 {

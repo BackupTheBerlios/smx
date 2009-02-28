@@ -33,13 +33,7 @@ AC_CHECK_LIB([stdc++], [main],[],[
         echo "Error! libstdc++ is required"
         exit -1
 ])
-AC_CHECK_LIB([tdb], [tdb_fetch],[],[
-AX_PATH_BDB([3],[
-        echo "Warning! BerkeleyDB is not stable running inside an apache module"
-        LIBS="$BDB_LIBS $LIBS"
-        LDFLAGS="$BDB_LDFLAGS -ldb_cxx $LDFLAGS"
-        CPPFLAGS="$CPPFLAGS $BDB_CPPFLAGS"
-])])
+AC_CHECK_LIB([tdb], [tdb_fetch])
 
 # sets apache version & include paths
 APACHE_APXS
