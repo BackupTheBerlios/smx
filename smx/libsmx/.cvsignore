@@ -3,6 +3,7 @@ Makefile
 *.lo
 .libs
 libsmx.la
+libtest_ext.la
 test_map
 buildtests
 *.plg
